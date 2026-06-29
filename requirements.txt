@@ -5,3 +5,4 @@ scikit-learn>=1.0.0
 rdkit>=2022.03.1
 Pillow>=9.0.0
 reportlab>=3.6.0
+pywebview>=4.0.0

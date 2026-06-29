@@ -14,23 +14,18 @@ C:\Users\UserK\AppData\Local\Programs\Python\Python310\lib\site-packages\sklearn
 https://scikit-learn.org/stable/model_persistence.html#security-maintainability-limitations
   warnings.warn(
 ============================================================
-QSAR Irritation Predictor Web App
+QSAR Irritation Predictor - Desktop Application
 ============================================================
-Models directory: C:\Users\UserK\project\Archive\model_binary
-RDKit available: True
-[OK] Models loaded successfully
-============================================================
-Starting server at http://localhost:5000
-============================================================
+[App] Loading models...
+[App] Models loaded successfully
+[App] Using port: 5000
+[Flask] Starting server on port 5000...
+[App] Waiting for server to start...
  * Serving Flask app 'app'
  * Debug mode: off
 WARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.
- * Running on all addresses (0.0.0.0)
  * Running on http://127.0.0.1:5000
- * Running on http://192.168.0.90:5000
 Press CTRL+C to quit
-127.0.0.1 - - [29/Jun/2026 17:46:15] "GET /health HTTP/1.1" 200 -
-127.0.0.1 - - [29/Jun/2026 17:47:54] "GET / HTTP/1.1" 200 -
-127.0.0.1 - - [29/Jun/2026 17:48:09] "POST /predict HTTP/1.1" 200 -
-127.0.0.1 - - [29/Jun/2026 17:48:14] "POST /generate_report HTTP/1.1" 200 -
-127.0.0.1 - - [29/Jun/2026 17:50:08] "POST /generate_report HTTP/1.1" 200 -
+127.0.0.1 - - [29/Jun/2026 17:52:17] "GET / HTTP/1.1" 200 -
+127.0.0.1 - - [29/Jun/2026 17:52:18] "GET /favicon.ico HTTP/1.1" 404 -
+[0629/175237.659:ERROR:ui\gfx\win\window_impl.cc:172] Failed to unregister class Chrome_WidgetWin_0. Error = 1411
