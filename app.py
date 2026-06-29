@@ -3,11 +3,14 @@ QSAR Irritation Prediction Web App
 Flask 기반 독성 예측 웹 애플리케이션
 """
 
-from flask import Flask, render_template, request, jsonify
+from flask import Flask, render_template, request, jsonify, send_file
 import pickle
 import numpy as np
 from pathlib import Path
 import sys
+from datetime import datetime
+import tempfile
+import os
 
 # RDKit imports
 try:
@@ -209,6 +212,53 @@ def health():
         'models_loaded': models_dict is not None,
         'rdkit_available': RDKIT_AVAILABLE
     })
+
+@app.route('/generate_report', methods=['POST'])
+def generate_report():
+    """PDF 리포트 생성 엔드포인트"""
+    try:
+        from report_generator import QSARReportGenerator
+
+        data = request.get_json()
+        smiles = data.get('smiles', '').strip()
+        predictions = data.get('predictions', {})
+        descriptors = data.get('descriptors', {})
+        molecule_name = data.get('molecule_name', 'Unknown')
+
+        if not smiles or not predictions:
+            return jsonify({'error': '예측 데이터가 필요합니다'}), 400
+
+        # 리포트 데이터 준비
+        report_data = {
+            'smiles': smiles,
+            'molecule_name': molecule_name,
+            'timestamp': datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
+            'predictions': predictions,
+            'descriptors': descriptors,
+            'descriptors_array': np.array(list(descriptors.values())).reshape(1, -1) if descriptors else None
+        }
+
+        # 임시 PDF 파일 생성
+        temp_dir = tempfile.gettempdir()
+        pdf_filename = f"QSAR_Report_{datetime.now().strftime('%Y%m%d_%H%M%S')}.pdf"
+        pdf_path = os.path.join(temp_dir, pdf_filename)
+
+        # 리포트 생성
+        generator = QSARReportGenerator()
+        generator.generate_report(report_data, pdf_path)
+
+        # PDF 파일 전송
+        return send_file(
+            pdf_path,
+            mimetype='application/pdf',
+            as_attachment=True,
+            download_name=pdf_filename
+        )
+
+    except ImportError as e:
+        return jsonify({'error': f'reportlab 라이브러리가 필요합니다: {str(e)}'}), 500
+    except Exception as e:
+        return jsonify({'error': f'리포트 생성 실패: {str(e)}'}), 500
 
 if __name__ == '__main__':
     print("=" * 60)

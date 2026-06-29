@@ -40,6 +40,11 @@ qsar_webapp/
 3. **분자 구조 시각화** - RDKit 기반
 4. **실시간 예측** - SMILES 입력 즉시 예측
 5. **신뢰도 표시** - High/Medium/Low 신뢰도 수준
+6. **📄 VEGA 스타일 PDF 리포트 생성**
+   - Prediction Summary (모델 예측 결과 + Training 정보)
+   - Molecular Descriptors (분자 특성)
+   - Applicability Domain (3.1 Similarity-based + 3.2 Leverage-based QMRF)
+   - References & Disclaimer
 
 ## 📊 모델 정보
 
